@@ -34,47 +34,51 @@ class CardDetail extends React.Component {
 
 	render() {
 
-		if (this.state.showFullImage) {
+		if (this.props.card) {
+			if (this.state.showFullImage) {
+				return(
+					<View style={styles.fullScreenImageContainer} >
+						<TouchableWithoutFeedback onPress={this._hideFullImage}>
+							<View style={styles.closeBtn}>
+								<Text>X</Text>
+							</View>
+						</TouchableWithoutFeedback>
+						<Image resizeMode='contain' style={styles.fullScreenImage} source={{uri: this.props.card.imageUrl}} />
+					</View>
+				);
+			}
+	
 			return(
-				<View style={styles.fullScreenImageContainer} >
-					<TouchableWithoutFeedback onPress={this._hideFullImage}>
-						<View style={styles.closeBtn}>
-							<Text>X</Text>
-						</View>
-					</TouchableWithoutFeedback>
-					<Image style={styles.fullScreenImage} source={{uri: this.props.card.imageUrl}} />
-				</View>
+				<ScrollView style={styles.cardDetailContainer}>
+					<View style={styles.cardDetailView}>
+						<TouchableWithoutFeedback onPress={this._closeDetail}>
+							<View style={styles.closeBtn}>
+								<Text>X</Text>
+							</View>
+						</TouchableWithoutFeedback>
+	
+						<TouchableWithoutFeedback onPress={this._showFullImage}>
+							<Image style={styles.cardDetailImage} source={{uri: this.props.card.imageUrl}} />
+						</TouchableWithoutFeedback>
+	
+						<Text style={[styles.itemTitle, {color: '#bcd1bc'}]}>{this.props.card.name}</Text>
+						{this.props.card.colors.map((color) => {
+							return(
+								<ColorIcon key={color} colorName={color} ></ColorIcon>
+							);
+						})}
+						<Text style={styles.itemSubtitle}>Type: {this.props.card.type}</Text>
+						<Text style={styles.itemSubtitle}>Set: {this.props.card.set}</Text>
+						<Text style={styles.itemSubtitle}>Set name: {this.props.card.setName}</Text>
+						<Text style={styles.itemSubtitle}>Mana cost: {this.props.card.manaCost}</Text>
+						<Text style={styles.itemSubtitle}>Rarity: {this.props.card.rarity}</Text>
+						<Text style={styles.itemSubtitle}>Type: {this.props.card.type}</Text>
+					</View>
+				</ScrollView>
 			);
 		}
 
-		return(
-			<ScrollView style={styles.cardDetailContainer}>
-				<View style={styles.cardDetailView}>
-					<TouchableWithoutFeedback onPress={this._closeDetail}>
-						<View style={styles.closeBtn}>
-							<Text>X</Text>
-						</View>
-					</TouchableWithoutFeedback>
-
-					<TouchableWithoutFeedback onPress={this._showFullImage}>
-						<Image style={styles.cardDetailImage} source={{uri: this.props.card.imageUrl}} />
-					</TouchableWithoutFeedback>
-
-					<Text style={[styles.itemTitle, {color: '#bcd1bc'}]}>{this.props.card.name}</Text>
-					{this.props.card.colors.map((color) => {
-						return(
-							<ColorIcon key={color} colorName={color} ></ColorIcon>
-						);
-					})}
-					<Text style={styles.itemSubtitle}>Type: {this.props.card.type}</Text>
-					<Text style={styles.itemSubtitle}>Set: {this.props.card.set}</Text>
-					<Text style={styles.itemSubtitle}>Set name: {this.props.card.setName}</Text>
-					<Text style={styles.itemSubtitle}>Mana cost: {this.props.card.manaCost}</Text>
-					<Text style={styles.itemSubtitle}>Rarity: {this.props.card.rarity}</Text>
-					<Text style={styles.itemSubtitle}>Type: {this.props.card.type}</Text>
-				</View>
-			</ScrollView>
-		);
+		return <Text>abc</Text>;
 	}
 }
 

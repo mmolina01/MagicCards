@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, Text} from 'react-native';
+import {FlatList, View, ActivityIndicator} from 'react-native';
 import CardListItem from './CardListItem.jsx';
 import Actions from '../actions/cardsAction.js';
 import styles from './Styles.js';
@@ -7,7 +7,7 @@ import styles from './Styles.js';
 class CardList extends React.Component {
 	constructor(props) {
 		super(props);
-		console.log(props.cards);
+
 		this._endReached = this._endReached.bind(this);
 	}
 
@@ -17,18 +17,23 @@ class CardList extends React.Component {
 	}
 
 	render() {
-		return(
-			<FlatList
-				data={this.props.cards}
-				renderItem={({item}) => (
-					<CardListItem card={item} />
-				)}
-				keyExtractor={({item, id}) => id}
-				onEndReached={this._endReached}
-				onEndReachedThreshold = { 0.1 }
-				style={styles.cardList}
-			/>
-		);
+
+		if (this.props.cards && this.props.cards.length > 0) {
+			return(
+				<FlatList
+					style={styles.cardList}
+					data={this.props.cards}
+					onEndReachedThreshold = { 0.1 }
+					onEndReached={this._endReached}
+					renderItem={({item}) => (
+						<CardListItem card={item} />
+					)}
+					keyExtractor={({item, id}) => id}
+				/>
+			);
+		}
+
+		return <View />
 	}
 }
 

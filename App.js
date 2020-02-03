@@ -1,24 +1,30 @@
 import React from 'react';
-import {View, ActivityIndicator} from 'react-native';
+import {View, ActivityIndicator, Modal, Text, SafeAreaView} from 'react-native';
 import Menu from './src/components/Menu.jsx';
 import CardList from './src/components/CardList.jsx';
 import styles from './src/components/Styles.js';
 import CardsStore from './src/stores/CardsStore.js';
-import CardDetail from './src/components/CardDetail.jsx'
+import CardDetail from './src/components/CardDetail.jsx';
+import fakeCards from './src/fake/fakeData.js';
 
 export default class App extends React.Component {
 
-	state = {
-		loadingCards: true,
-		gettingNewCards: false,
-		data: [],
-		showingDetails: false
-	};
 	page = 1;
 	pageSize = 30;
 	cardInDetail = null;
 
-	componentDidMount() {console.log('mount')
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			loadingCards: false,//true,
+			gettingNewCards: true,
+			data: fakeCards.cards,//[],
+			showingDetails: false
+		};
+	}
+
+	componentDidMount() {
 
 		CardsStore.on('CARDS_LOADED', (data) => {
 			this.setState(Object.assign(this.state, {data}));
@@ -40,7 +46,7 @@ export default class App extends React.Component {
 			this.closeDetails();
 		});
 
-		CardsStore.init();
+		//CardsStore.init();
 	}
 
 	componentWillUnmount() {
@@ -50,37 +56,70 @@ export default class App extends React.Component {
 	showDetails(card) {
 		if (card) {
 			this.cardInDetail = card;
+			console.log(this.state.showingDetails);
 			this.setState(Object.assign(this.state, {showingDetails: true}));
+			console.log(this.state.showingDetails);
 		}
 	}
 
 	closeDetails() {
 		this.setState(Object.assign(this.state, {showingDetails: false}));
+		console.log(this.state)
+	}
+
+	_renderLoading() {
+		return(
+			<ActivityIndicator />
+		);
+	}
+
+	_renderList() {
+		return(
+			<View style={styles.container}>
+				<Modal visible={false} animationType="slide" onRequestClose={()=>{}} style={styles.modalStyle}>
+					<Text>inside modal {this.state.showingDetails? 'true' : 'false'}</Text>
+					<CardDetail card={this.cardInDetail}></CardDetail>
+				</Modal>
+
+				<CardList cards={this.state.data}></CardList>
+			</View>
+		);
 	}
 
 	render() {
 
-		if (this.state.loadingCards) {
-			return(
-				<View style={styles.loader}>
-					<ActivityIndicator />
-				</View>
-			);
-		}
+		// if (this.state.loadingCards) {
+		// 	return(
+		// 		<View style={styles.loader}>
+		// 			<ActivityIndicator />
+		// 		</View>
+		// 	);
+		// }
 
-		if (this.state.showingDetails) {
-			return (
-				<CardDetail card={this.cardInDetail}></CardDetail>
-			);
-		}
+		const renderedItems = this.state.loadingCards ? this._renderLoading() : this._renderList();
 
-		const loadingIcon =  this.state.gettingNewCards ? <ActivityIndicator style={styles.top20}/> : <View/>;
-		return (
-			<View style={styles.container}>
-				<Menu></Menu>
-				<CardList cards={this.state.data}></CardList>
-				{loadingIcon}
-			</View>
+		// const loadingIcon = this.state.gettingNewCards ? <ActivityIndicator style={styles.top20}/> : <View/>;
+		// return (
+		// 	<View style={styles.container}>
+		// 		<Modal visible={false} animationType="slide" onRequestClose={()=>{}}>
+		// 			<Text>inside modal {this.state.showingDetails? 'true' : 'false'}</Text>
+		// 			<CardDetail card={this.cardInDetail}></CardDetail>
+		// 		</Modal>
+
+		// 		<CardList cards={this.state.data}></CardList>
+		// 	</View>
+
+
+			// <View style={styles.container}>
+			// 	{/* <Menu></Menu> */}
+			// 	<CardList cards={this.state.data} showLoader={true}></CardList>
+			// </View>
+		//);
+
+		return(
+			<SafeAreaView style={styles.container}>
+				{renderedItems}
+			</SafeAreaView>
 		);
 	}
 }

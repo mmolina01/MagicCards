@@ -4,7 +4,7 @@ import dispatcher from '../Dispatcher';
 
 class CardsStore extends EventEmitter {
 	page = 1;
-	pageSize = 15;
+	pageSize = 30;
 	filters = {};
 	loading = false;
 	loadingMore = false;
@@ -25,7 +25,7 @@ class CardsStore extends EventEmitter {
 		this.emitLoadingState();
 
 		setTimeout(() => {
-			this.getNextPage();
+			//this.getNextPage();
 		}, 3000);
 	}
 
@@ -34,7 +34,7 @@ class CardsStore extends EventEmitter {
 	}
 
 	setPage(size) {
-		this.pageSize = size;
+		//this.pageSize = size;
 	}
 
 	emitNewCards() {
@@ -72,19 +72,23 @@ class CardsStore extends EventEmitter {
 	}
 
 	async getNextPage() {
-		this.loadingMore = true;
-		this.emitLoadingMoreState();
 
-		this.page++;
-		const newCards = await this.getCards();
-		if (newCards) {
-			this.cards = this.cards.concat(newCards);
+		if (!this.loadingMore) {
+			console.log('store.loadMore');
+			this.loadingMore = true;
+			this.emitLoadingMoreState();
+	
+			this.page++;
+			const newCards = await this.getCards();
+			if (newCards) {
+				this.cards = this.cards.concat(newCards);
+			}
+	
+			this.loadingMore = false;
+			this.emitLoadingMoreState();
+	
+			this.emitNewCards();
 		}
-
-		this.loadingMore = false;
-		this.emitLoadingMoreState();
-
-		this.emitNewCards();
 	}
 
 	async applyFilters(filter) {

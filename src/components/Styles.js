@@ -1,5 +1,8 @@
 import {StyleSheet} from 'react-native';
 
+const deviceWidth = window.width;
+const deviceHeight = window.height;
+
 const styles = StyleSheet.create({
 
 	top20: {
@@ -10,7 +13,9 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: '#e3e1dc',
 		alignItems: 'center',
-		justifyContent: 'center'
+		justifyContent: 'center',
+		width: deviceWidth,
+		height: deviceHeight
 	},
 
 	loader: {
@@ -28,7 +33,8 @@ const styles = StyleSheet.create({
 	},
 
 	cardList: {
-		width: '100%'
+		width: deviceWidth,
+		height: deviceHeight
 	},
 
 	listItem: {
@@ -64,6 +70,10 @@ const styles = StyleSheet.create({
 		height: 50
 	},
 
+	moreCardsLoader: {
+		height: 20
+	},
+
 	colorIcon: {
 		width: 15,
 		height: 15,
@@ -76,6 +86,8 @@ const styles = StyleSheet.create({
 	cardDetailContainer: {
 		flex: 1,
 		backgroundColor: '#000',
+		width: '100%',
+		height: '100%'
 	},
 
 	cardDetailView: {
@@ -90,15 +102,15 @@ const styles = StyleSheet.create({
 	},
 
 	cardDetailImage: {
-		width: 300,
-		height: 500,
+		width: 200,
+		height: 300,
 		flex: 1,
 		marginTop: 50,
 	},
 
 	closeBtn: {
-		width: 50,
-		height: 50,
+		width: 25,
+		height: 25,
 		backgroundColor: '#fff',
 		borderRadius: 50,
 		position: 'absolute',
@@ -114,17 +126,20 @@ const styles = StyleSheet.create({
 		position: 'relative',
 		flex: 1,
 		justifyContent: 'center',
-		alignItems: 'center',
+		alignItems: 'stretch',
 		backgroundColor: '#000',
 		position: 'relative'
 	},
 
 	fullScreenImage: {
-		position: 'absolute',
-		top: 0,
-		left: 0,
-		bottom: 0,
-		right: 0,
+		flex: 1,
+		width: deviceWidth * 0.9,
+		height: deviceHeight * 0.9
+	},
+
+	modalStyle: {
+		width: deviceWidth,
+		height: deviceHeight
 	}
 });
 
