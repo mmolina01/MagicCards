@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, View, ActivityIndicator} from 'react-native';
+import {FlatList, View} from 'react-native';
 import CardListItem from './CardListItem.jsx';
 import Actions from '../actions/cardsAction.js';
 import styles from './Styles.js';
@@ -13,7 +13,7 @@ class CardList extends React.Component {
 
 	_endReached() {
 		console.log('end');
-		//Actions.loadMoreCards();
+		Actions.loadMoreCards();
 	}
 
 	render() {

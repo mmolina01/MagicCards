@@ -1,5 +1,6 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
 
+const window = Dimensions.get('window');
 const deviceWidth = window.width;
 const deviceHeight = window.height;
 
@@ -26,10 +27,51 @@ const styles = StyleSheet.create({
 	},
 
 	menu: {
-		height: 100,
-		width: '100%',
-		paddingTop: 15,
+		height: 0.1 * deviceHeight,
+		width: deviceWidth,
+		padding: 10,
 		backgroundColor: '#376db3',
+		justifyContent: 'space-between',
+		flexDirection: 'row',
+	},
+
+	filterButton: {
+		margin: 5,
+		color: 'pink'
+	},
+
+	filterBtnContainer: {
+		height: (0.1 *deviceHeight) < 25 ? (0.2 * deviceHeight - 5) : 25,
+		width: (0.1 *deviceHeight) < 25 ? (0.2 * deviceHeight - 5) : 25,
+		backgroundColor: '#0373fc',
+		borderColor: '#fff',
+		borderWidth: 1,
+		borderRadius: 5,
+		margin: 'auto',
+		padding: 1
+	},
+
+	filterImage: {
+		flex: 1,
+		width: '100%',
+		height: '100%'
+	},
+
+	searchContainer: {
+		margin: 'auto',
+		flexDirection: 'row'
+	},
+
+	cardNameInput: {
+		height: (0.2 *deviceHeight) < 25 ? (0.2 * deviceHeight - 5) : 25,
+		color: '#44474f',
+		backgroundColor: '#fff',
+		width: 0.3 * deviceWidth,
+		paddingLeft: 5
+	},
+
+	searchArea: {
+
 	},
 
 	cardList: {
@@ -43,15 +85,16 @@ const styles = StyleSheet.create({
 		padding: 5,
 		flexDirection: 'row',
 		flex: 1,
-		alignItems: 'center'
+		alignItems: 'center',
+		justifyContent: 'space-between'
 	},
 
 	listInfo: {
-		flex: 0.75
+		flex: 0.85
 	},
 
 	listImage: {
-		flex: 0.25
+		flex: 0.15
 	},
 
 	itemTitle: {
@@ -72,6 +115,10 @@ const styles = StyleSheet.create({
 
 	moreCardsLoader: {
 		height: 20
+	},
+
+	colorIconsContainer: {
+		flexDirection: 'row'
 	},
 
 	colorIcon: {
@@ -95,10 +142,8 @@ const styles = StyleSheet.create({
 		backgroundColor: '#000',
 		alignItems: 'center',
 		justifyContent: 'center',
-		position: 'relative',
-		marginBottom: 10,
-		padding: 10,
-		marginTop: 20,
+		position: 'relative', //TODO
+		padding: 15,
 	},
 
 	cardDetailImage: {
@@ -139,7 +184,9 @@ const styles = StyleSheet.create({
 
 	modalStyle: {
 		width: deviceWidth,
-		height: deviceHeight
+		height: deviceHeight,
+		justifyContent: 'center',
+		alignItems: 'center'
 	}
 });
 

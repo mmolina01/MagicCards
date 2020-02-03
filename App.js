@@ -17,8 +17,8 @@ export default class App extends React.Component {
 		super(props);
 
 		this.state = {
-			loadingCards: false,//true,
-			gettingNewCards: true,
+			loadingCards: false, //true,
+			gettingNewCards: false,
 			data: fakeCards.cards,//[],
 			showingDetails: false
 		};
@@ -67,21 +67,26 @@ export default class App extends React.Component {
 		console.log(this.state)
 	}
 
-	_renderLoading() {
-		return(
+	renderLoading() {
+		return( //transform this into modal
 			<ActivityIndicator />
 		);
 	}
 
-	_renderList() {
+	renderList() {
+
+		const activity = this.state.gettingNewCards ? <ActivityIndicator /> : null;
 		return(
 			<View style={styles.container}>
-				<Modal visible={false} animationType="slide" onRequestClose={()=>{}} style={styles.modalStyle}>
+				{/* <Modal visible={false} animationType="slide" onRequestClose={()=>{}} style={styles.modalStyle}>
 					<Text>inside modal {this.state.showingDetails? 'true' : 'false'}</Text>
 					<CardDetail card={this.cardInDetail}></CardDetail>
-				</Modal>
+				</Modal> */}
+
+				<Menu></Menu>
 
 				<CardList cards={this.state.data}></CardList>
+				{activity}
 			</View>
 		);
 	}
@@ -96,7 +101,7 @@ export default class App extends React.Component {
 		// 	);
 		// }
 
-		const renderedItems = this.state.loadingCards ? this._renderLoading() : this._renderList();
+		const renderedItems = this.state.loadingCards ? this.renderLoading() : this.renderList();
 
 		// const loadingIcon = this.state.gettingNewCards ? <ActivityIndicator style={styles.top20}/> : <View/>;
 		// return (

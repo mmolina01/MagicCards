@@ -14,15 +14,8 @@ class CardsStore extends EventEmitter {
 		this.cards = [];
 	}
 
-	async init() {
-		this.loading = true;
-		this.emitLoadingState();
-
-		this.cards = await this.getCards();
-		this.emitNewCards();
-
-		this.loading = false;
-		this.emitLoadingState();
+	init() {
+		this.renewCards();
 
 		setTimeout(() => {
 			//this.getNextPage();
@@ -49,11 +42,22 @@ class CardsStore extends EventEmitter {
 		this.emit('LOADING_MORE_STATE', this.loadingMore);
 	}
 
+	async renewCards() {
+		this.loading = true;
+		this.emitLoadingState();
+
+		this.cards = await this.getCards();
+		this.emitNewCards();
+
+		this.loading = false;
+		this.emitLoadingState();
+	}
+
 	getCards() {
 
 		let filterString = '';
-		filterString += (this.filters && this.filters.color ? '&color='+filters.color : '');
-		filterString += (this.filters && this.filters.name ? '&name='+filters.name : '');
+		filterString += (this.filters && this.filters.color ? '&colors='+this.filters.color : '');
+		filterString += (this.filters && this.filters.name ? '&name='+this.filters.name : '');
 
 		return fetch('https://api.magicthegathering.io/v1/cards?page=' + this.page +
 		'&pageSize=' + this.pageSize +'&contains=imageUrl' + filterString)
@@ -91,11 +95,10 @@ class CardsStore extends EventEmitter {
 		}
 	}
 
-	async applyFilters(filter) {
+	applyFilters(filter) {
 		this.filters = filter;
 		this.setPage(1);
-		this.cards = await this.getCards();
-		this.emitNewCards();
+		this.renewCards();
 	}
 
 	handleAction(action) {

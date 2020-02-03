@@ -25,11 +25,13 @@ class CardListItem extends React.Component {
 				<View style={styles.listItem}>
 					<View style={styles.listInfo}>
 						<Text style={styles.itemTitle}>{this.props.card.name}</Text>
-						{this.props.card.colors.map((color) => {
-							return(
-								<ColorIcon key={color} colorName={color} ></ColorIcon>
-							);
-						})}
+						<View style={styles.colorIconsContainer}>
+							{this.props.card.colors.map((color) => {
+								return(
+									<ColorIcon key={color} colorName={color} ></ColorIcon>
+								);
+							})}
+						</View>
 						<Text style={styles.itemSubtitle}>Type: {this.props.card.type}</Text>
 						<Text style={styles.itemSubtitle}>Set: {this.props.card.setName}</Text>
 					</View>
