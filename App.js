@@ -12,17 +12,12 @@ export default class App extends React.Component {
 	page = 1;
 	pageSize = 30;
 	cardInDetail = null;
-
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			loadingCards: false, //true,
-			gettingNewCards: false,
-			data: fakeCards.cards,//[],
-			showingDetails: false
-		};
-	}
+	state = {
+		loadingCards: false, //true,
+		gettingNewCards: false,
+		data: fakeCards.cards,//[],
+		showingDetails: false
+	};
 
 	componentDidMount() {
 
@@ -78,15 +73,15 @@ export default class App extends React.Component {
 		const activity = this.state.gettingNewCards ? <ActivityIndicator /> : null;
 		return(
 			<View style={styles.container}>
+				<Menu></Menu>
+
+				<CardList cards={this.state.data} showLoader={this.state.gettingNewCards}></CardList>
+				{/* {activity} */}
+
 				{/* <Modal visible={false} animationType="slide" onRequestClose={()=>{}} style={styles.modalStyle}>
 					<Text>inside modal {this.state.showingDetails? 'true' : 'false'}</Text>
 					<CardDetail card={this.cardInDetail}></CardDetail>
 				</Modal> */}
-
-				<Menu></Menu>
-
-				<CardList cards={this.state.data}></CardList>
-				{activity}
 			</View>
 		);
 	}

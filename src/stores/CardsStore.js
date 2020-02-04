@@ -53,7 +53,7 @@ class CardsStore extends EventEmitter {
 		this.emitLoadingState();
 	}
 
-	getCards() {
+	async getCards() {
 
 		let filterString = '';
 		filterString += (this.filters && this.filters.color ? '&colors='+this.filters.color : '');

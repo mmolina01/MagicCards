@@ -71,7 +71,8 @@ class Menu extends React.Component{
 				</View>
 
 				{/* <Modal 
-				visible={this.state.showColorFilter} style={styles.modalStyle} transparent={true}
+				visible={this.state.showColorFilter} style={styles.modalStyle}
+				transparent={false}
 				animationType={'slide'}>
 					{colorFilterValues.map((colorName, $index) => {
 						return(

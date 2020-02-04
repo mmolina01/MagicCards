@@ -1,19 +1,41 @@
 import React from 'react';
-import {FlatList, View} from 'react-native';
+import {FlatList, View, ActivityIndicator} from 'react-native';
 import CardListItem from './CardListItem.jsx';
 import Actions from '../actions/cardsAction.js';
+import CardsStore from '../stores/CardsStore.js';
 import styles from './Styles.js';
 
 class CardList extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			showLoader: false
+		};
 
 		this._endReached = this._endReached.bind(this);
+		this._renderLoader = this._renderLoader.bind(this);
+	}
+
+	componentDidMount() {
+
+		CardsStore.on('LOADING_MORE_STATE', (showLoader) => {
+			if(showLoader)
+			this.setState(Object.assign(this.state, {showLoader}));
+			console.log(this.state);
+		});
+	}
+
+	componentWillUnmount() {
+		//remove events
 	}
 
 	_endReached() {
 		console.log('end');
 		Actions.loadMoreCards();
+	}
+
+	_renderLoader() {
+		return this.props.showLoader ? <ActivityIndicator/> : null;
 	}
 
 	render() {
@@ -29,6 +51,7 @@ class CardList extends React.Component {
 						<CardListItem card={item} />
 					)}
 					keyExtractor={({item, id}) => id}
+					ListFooterComponent={this._renderLoader}
 				/>
 			);
 		}
