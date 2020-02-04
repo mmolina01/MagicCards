@@ -18,6 +18,10 @@ export default class App extends React.Component {
 		showingDetails: false
 	};
 
+	/*
+		Starts listeners for all events needed
+		Calls the CardStore for start loading the cards
+	*/
 	componentDidMount() {
 
 		CardsStore.on('CARDS_LOADED', (data) => {
@@ -47,15 +51,21 @@ export default class App extends React.Component {
 		//remove event listeners (not needed for this app)
 	}
 
+	/*
+		Turns invisible the card detail Modal
+	*/
+	closeDetails() {
+		this.setState({showingDetails: false});
+	}
+
+	/*
+		Turns visible the card detail Modal
+	*/
 	showDetails(card) {
 		if (card) {
 			this.cardInDetail = card;
 			this.setState({showingDetails: true});
 		}
-	}
-
-	closeDetails() {
-		this.setState({showingDetails: false});
 	}
 
 	render() {

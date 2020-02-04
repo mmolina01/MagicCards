@@ -17,8 +17,18 @@ class Menu extends React.Component{
 
 		this._showColorFilters = this._showColorFilters.bind(this);
 		this._hideColorFilters = this._hideColorFilters.bind(this);
+		this._removeFilters = this._removeFilters.bind(this);
 		this._selectColorFilter = this._selectColorFilter.bind(this);
 		this._searchByCardName = this._searchByCardName.bind(this);
+	}
+
+	_removeFilters() {
+		this.selectedFilter = null;
+		Actions.filterCards({
+			name: this.state.cardName,
+			color: this.selectedFilter
+		});
+		this._hideColorFilters();
 	}
 
 	_showColorFilters() {
@@ -77,11 +87,17 @@ class Menu extends React.Component{
 								<View key={$index} style={styles.filterButton}>
 									<Button title={colorName} color={colorName.toLowerCase()} 
 									onPress={() => this._selectColorFilter(colorName)} />
+									{
+										colorName == this.selectedFilter ? 
+										<Image source={require('../images/check.png')} style={styles.selectedFilterIcon}/> 
+										: null
+									}
+
 								</View>
 							);
 						})}
 						<View style={[styles.filterButton, styles.top20]}>
-							<Button title={'remove filters'} color={'orange'} onPress={this._hideColorFilters}/>
+							<Button title={'remove filters'} color={'orange'} onPress={this._removeFilters}/>
 						</View>
 						<View style={styles.filterButton}>
 							<Button title={'cancel'} color={'gray'} onPress={this._hideColorFilters}/>

@@ -109,7 +109,8 @@ const styles = StyleSheet.create({
 
 	filterButton: {
 		margin: 5,
-		color: 'pink'
+		flexDirection: 'row',
+		justifyContent: 'center'
 	},
 
 	fullScreenImage: {
@@ -201,6 +202,11 @@ const styles = StyleSheet.create({
 	searchContainer: {
 		margin: 'auto',
 		flexDirection: 'row'
+	},
+
+	selectedFilterIcon: {
+		height: 20,
+		width: 20
 	},
 
 	top20: {
