@@ -5,43 +5,42 @@ import CardList from './src/components/CardList.jsx';
 import styles from './src/components/Styles.js';
 import CardsStore from './src/stores/CardsStore.js';
 import CardDetail from './src/components/CardDetail.jsx';
-import fakeCards from './src/fake/fakeData.js';
+//import fakeCards from './src/fake/fakeData.js';
 
 export default class App extends React.Component {
 
-	page = 1;
-	pageSize = 30;
+	//
 	cardInDetail = null;
 	state = {
-		loadingCards: false, //true,
+		loadingCards: true,
 		gettingNewCards: false,
-		data: fakeCards.cards,//[],
+		data: [],
 		showingDetails: false
 	};
 
 	componentDidMount() {
 
 		CardsStore.on('CARDS_LOADED', (data) => {
-			this.setState(Object.assign(this.state, {data}));
+			this.setState({data});
 		});
 
 		CardsStore.on('LOADING_STATE', (loadingCards) => {
-			this.setState(Object.assign(this.state, {loadingCards}));
+			this.setState({loadingCards});
 		});
 
 		CardsStore.on('LOADING_MORE_STATE', (gettingNewCards) => {
-			this.setState(Object.assign(this.state, {gettingNewCards}));
+			this.setState({gettingNewCards});
 		});
 		
 		CardsStore.on('SHOW_DETAILS', (card) => {
 			this.showDetails(card);
 		});
 
-		CardsStore.on('CLOSE_DETAILS', (card) => {
+		CardsStore.on('CLOSE_DETAILS', () => {
 			this.closeDetails();
 		});
 
-		//CardsStore.init();
+		CardsStore.init();
 	}
 
 	componentWillUnmount() {
@@ -51,76 +50,34 @@ export default class App extends React.Component {
 	showDetails(card) {
 		if (card) {
 			this.cardInDetail = card;
-			console.log(this.state.showingDetails);
-			this.setState(Object.assign(this.state, {showingDetails: true}));
-			console.log(this.state.showingDetails);
+			this.setState({showingDetails: true});
 		}
 	}
 
 	closeDetails() {
-		this.setState(Object.assign(this.state, {showingDetails: false}));
-		console.log(this.state)
-	}
-
-	renderLoading() {
-		return( //transform this into modal
-			<ActivityIndicator />
-		);
-	}
-
-	renderList() {
-
-		const activity = this.state.gettingNewCards ? <ActivityIndicator /> : null;
-		return(
-			<View style={styles.container}>
-				<Menu></Menu>
-
-				<CardList cards={this.state.data} showLoader={this.state.gettingNewCards}></CardList>
-				{/* {activity} */}
-				{/* <Modal visible={this.state.showingDetails} style={styles.modalStyle}>
-					<Text>inside modal {this.state.showingDetails ? 'true' : 'false'}</Text>
-				</Modal> */}
-				{/* <Modal visible={false} animationType="slide" onRequestClose={()=>{}} style={styles.modalStyle}>
-					<Text>inside modal {this.state.showingDetails? 'true' : 'false'}</Text>
-					<CardDetail card={this.cardInDetail}></CardDetail>
-				</Modal> */}
-			</View>
-		);
+		this.setState({showingDetails: false});
 	}
 
 	render() {
 
-		// if (this.state.loadingCards) {
-		// 	return(
-		// 		<View style={styles.loader}>
-		// 			<ActivityIndicator />
-		// 		</View>
-		// 	);
-		// }
-
-		const renderedItems = this.state.loadingCards ? this.renderLoading() : this.renderList();
-
-		// const loadingIcon = this.state.gettingNewCards ? <ActivityIndicator style={styles.top20}/> : <View/>;
-		// return (
-		// 	<View style={styles.container}>
-		// 		<Modal visible={false} animationType="slide" onRequestClose={()=>{}}>
-		// 			<Text>inside modal {this.state.showingDetails? 'true' : 'false'}</Text>
-		// 			<CardDetail card={this.cardInDetail}></CardDetail>
-		// 		</Modal>
-
-		// 		<CardList cards={this.state.data}></CardList>
-		// 	</View>
-
-
-			// <View style={styles.container}>
-			// 	{/* <Menu></Menu> */}
-			// 	<CardList cards={this.state.data} showLoader={true}></CardList>
-			// </View>
-		//);
-
 		return(
 			<SafeAreaView style={styles.container}>
-				{renderedItems}
+				<View style={styles.container}>
+					<Modal visible={this.state.loadingCards} style={styles.modalStyle}>
+						<View style={styles.innerModalContainer}>
+							<ActivityIndicator />
+							<Text></Text>
+						</View>
+					</Modal>
+					<Menu></Menu>
+
+					<CardList cards={this.state.data} showLoader={this.state.gettingNewCards}></CardList>
+					<Modal visible={this.state.showingDetails} animationType="slide" style={styles.modalStyle}>
+						<View style={styles.innerModalContainer}>
+							<CardDetail card={this.cardInDetail}></CardDetail>
+						</View>
+					</Modal>
+				</View>
 			</SafeAreaView>
 		);
 	}

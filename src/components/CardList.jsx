@@ -2,38 +2,30 @@ import React from 'react';
 import {FlatList, View, ActivityIndicator} from 'react-native';
 import CardListItem from './CardListItem.jsx';
 import Actions from '../actions/cardsAction.js';
-import CardsStore from '../stores/CardsStore.js';
 import styles from './Styles.js';
 
 class CardList extends React.Component {
+
 	constructor(props) {
 		super(props);
-		this.state = {
-			showLoader: false
-		};
 
+		// + Binds
 		this._endReached = this._endReached.bind(this);
 		this._renderLoader = this._renderLoader.bind(this);
+		// - Binds
 	}
 
-	componentDidMount() {
-
-		CardsStore.on('LOADING_MORE_STATE', (showLoader) => {
-			if(showLoader)
-			this.setState(Object.assign(this.state, {showLoader}));
-			console.log(this.state);
-		});
-	}
-
-	componentWillUnmount() {
-		//remove events
-	}
-
+	/*
+		Triggered when the list hits its bottom (onEndReachedThreshold)
+		Emits event to the store to load more cards
+	*/
 	_endReached() {
-		console.log('end');
 		Actions.loadMoreCards();
 	}
 
+	/*
+		Renders the loading icon at the list footer when needed
+	*/
 	_renderLoader() {
 		return this.props.showLoader ? <ActivityIndicator/> : null;
 	}

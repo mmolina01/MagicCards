@@ -22,7 +22,6 @@ class Menu extends React.Component{
 	}
 
 	_showColorFilters() {
-		console.log('show filters');
 		this.setState(Object.assign(this.state, {showColorFilter: true}));
 	}
 
@@ -70,22 +69,25 @@ class Menu extends React.Component{
 					</View>
 				</View>
 
-				{/* <Modal 
-				visible={this.state.showColorFilter} style={styles.modalStyle}
-				transparent={false}
-				animationType={'slide'}>
-					{colorFilterValues.map((colorName, $index) => {
-						return(
-							<View key={$index} style={styles.filterButton}>
-								<Button title={colorName} color={colorName.toLowerCase()} 
-								onPress={() => this._selectColorFilter(colorName)} />
-							</View>
-						);
-					})}
-					<View style={[styles.filterButton, styles.top20]}>
-						<Button title={'cancel'} color={'gray'} onPress={this._hideColorFilters}/>
+				<Modal 
+				visible={this.state.showColorFilter} style={styles.modalStyle} animationType={'slide'}>
+					<View style={styles.innerModalContainer}>
+						{colorFilterValues.map((colorName, $index) => {
+							return(
+								<View key={$index} style={styles.filterButton}>
+									<Button title={colorName} color={colorName.toLowerCase()} 
+									onPress={() => this._selectColorFilter(colorName)} />
+								</View>
+							);
+						})}
+						<View style={[styles.filterButton, styles.top20]}>
+							<Button title={'remove filters'} color={'orange'} onPress={this._hideColorFilters}/>
+						</View>
+						<View style={styles.filterButton}>
+							<Button title={'cancel'} color={'gray'} onPress={this._hideColorFilters}/>
+						</View>
 					</View>
-				</Modal> */}
+				</Modal>
 			</View>
 		);
 	}

@@ -14,34 +14,37 @@ class CardsStore extends EventEmitter {
 		this.cards = [];
 	}
 
+	/*
+		Initializes the store by fetching cards data
+	*/
 	init() {
 		this.renewCards();
-
-		setTimeout(() => {
-			//this.getNextPage();
-		}, 3000);
 	}
 
-	setPage(page) {
-		this.page = page;
-	}
-
-	setPage(size) {
-		//this.pageSize = size;
-	}
-
+	/*
+		Emits the cards array when new cards are added to it or is refreshed
+	*/
 	emitNewCards() {
 		this.emit('CARDS_LOADED', this.cards);
 	}
 
+	/*
+		Emits when fetching cards for refreshing the cards array
+	*/
 	emitLoadingState() {
 		this.emit('LOADING_STATE', this.loading);
 	}
 
+	/*
+		Emits when fetching for adding cards to the cards array
+	*/
 	emitLoadingMoreState() {
 		this.emit('LOADING_MORE_STATE', this.loadingMore);
 	}
 
+	/*
+		Overwrites the cards array with a new one 
+	*/
 	async renewCards() {
 		this.loading = true;
 		this.emitLoadingState();
@@ -53,6 +56,9 @@ class CardsStore extends EventEmitter {
 		this.emitLoadingState();
 	}
 
+	/*
+		Fetch cards from the api 
+	*/
 	async getCards() {
 
 		let filterString = '';
@@ -75,10 +81,12 @@ class CardsStore extends EventEmitter {
 		});
 	}
 
+	/*
+		Fetch for a next page of cards 
+	*/
 	async getNextPage() {
 
 		if (!this.loadingMore) {
-			console.log('store.loadMore');
 			this.loadingMore = true;
 			this.emitLoadingMoreState();
 	
@@ -95,12 +103,18 @@ class CardsStore extends EventEmitter {
 		}
 	}
 
+	/*
+		Applies filters to be used by the fetch card method 
+	*/
 	applyFilters(filter) {
 		this.filters = filter;
-		this.setPage(1);
+		this.page = 1;
 		this.renewCards();
 	}
 
+	/*
+		Handles actions recieved from the distpatcher 
+	*/
 	handleAction(action) {
 		switch(action.type) {
 			case 'LOAD_MORE_CARDS':
@@ -115,7 +129,6 @@ class CardsStore extends EventEmitter {
 			case 'CLOSE_CARD_DETAIL':
 				this.emit('CLOSE_DETAILS');
 		}
-		console.log('handle ation ' + action.type)
 	}
 }
 

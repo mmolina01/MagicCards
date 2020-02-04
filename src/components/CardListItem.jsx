@@ -13,14 +13,15 @@ class CardListItem extends React.Component {
 		this._itemSelected = this._itemSelected.bind(this);
 	}
 
+	/*
+		Ask Actions to trigger the card selected event passing the card info
+	*/
 	_itemSelected() {
-		console.log(this.props.card);
 		Actions.showCardDetail(this.props.card);
 	}
 
 	render() {
 		return (
-
 			<TouchableHighlight onPress={this._itemSelected} underlayColor="white">
 				<View style={styles.listItem}>
 					<View style={styles.listInfo}>

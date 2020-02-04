@@ -6,8 +6,59 @@ const deviceHeight = window.height;
 
 const styles = StyleSheet.create({
 
-	top20: {
-		marginTop: 20
+	cardDetailImage: {
+		width: 200,
+		height: 300
+	},
+
+	cardDetailView: {
+		backgroundColor: '#000',
+		alignItems: 'center',
+		justifyContent: 'center',
+		position: 'relative',
+		padding: 15,
+		width: deviceWidth,
+		height: deviceHeight,
+	},
+
+	cardList: {
+		width: deviceWidth,
+		height: deviceHeight
+	},
+
+	cardNameInput: {
+		height: (0.2 *deviceHeight) < 25 ? (0.2 * deviceHeight - 5) : 25,
+		color: '#44474f',
+		backgroundColor: '#fff',
+		width: 0.3 * deviceWidth,
+		paddingLeft: 5
+	},
+
+	closeBtn: {
+		width: 25,
+		height: 25,
+		backgroundColor: '#fff',
+		borderRadius: 50,
+		borderColor: '#000',
+		position: 'absolute',
+		top: 25,
+		right: 5,
+		alignItems: 'center',
+		justifyContent: 'center',
+		zIndex: 2
+	},
+
+	colorIcon: {
+		width: 15,
+		height: 15,
+		borderRadius: 25,
+		backgroundColor: 'black',
+		borderColor: '#bcd1bc',
+		borderWidth: 1
+	},
+
+	colorIconsContainer: {
+		flexDirection: 'row'
 	},
 
 	container: {
@@ -17,6 +68,106 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		width: deviceWidth,
 		height: deviceHeight
+	},
+
+	detailImageMessage: {
+		fontSize: 12,
+		color: '#ccc',
+		marginTop: 5
+	},
+
+	detailSubtitle: {
+		fontSize: 18,
+		color: '#fff',
+		marginTop: 10
+	},
+
+	detailTitle: {
+		fontSize: 26,
+		fontWeight: 'bold',
+		color: '#bcd1bc',
+		marginTop: 20,
+		marginBottom: 10
+	},
+
+	filterImage: {
+		flex: 1,
+		width: '100%',
+		height: '100%'
+	},
+
+	filterBtnContainer: {
+		height: (0.1 *deviceHeight) < 25 ? (0.2 * deviceHeight - 5) : 25,
+		width: (0.1 *deviceHeight) < 25 ? (0.2 * deviceHeight - 5) : 25,
+		backgroundColor: '#0373fc',
+		borderColor: '#fff',
+		borderWidth: 1,
+		borderRadius: 5,
+		margin: 'auto',
+		padding: 1
+	},
+
+	filterButton: {
+		margin: 5,
+		color: 'pink'
+	},
+
+	fullScreenImage: {
+		width: deviceWidth * 0.9,
+		height: deviceHeight * 0.9,
+		margin: 'auto'
+	},
+
+	fullScreenImageContainer: {
+		position: 'relative',
+		justifyContent: 'center',
+		alignItems: 'stretch',
+		backgroundColor: '#000',
+		position: 'relative',
+		width: deviceWidth,
+		height: deviceHeight
+	},
+
+	innerModalContainer: {
+		height: '100%',
+		width: '100%',
+		alignItems: 'center',
+		justifyContent: 'center',
+		backgroundColor: '#e3e1dc'
+	},
+
+	itemSubtitle: {
+		fontSize: 16,
+		color: '#44474f'
+	},
+
+	itemThumbnail: {
+		width: 50,
+		height: 50
+	},
+	
+	itemTitle: {
+		fontSize: 20,
+		fontWeight: 'bold',
+		color: '#000'
+	},
+
+	listImage: {
+		flex: 0.15
+	},
+
+	listInfo: {
+		flex: 0.85
+	},
+
+	listItem: {
+		borderBottomColor: '#ccc',
+		borderBottomWidth: 1,
+		padding: 5,
+		flexDirection: 'row',
+		flex: 1,
+		alignItems: 'center',
+		justifyContent: 'space-between'
 	},
 
 	loader: {
@@ -35,26 +186,16 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 	},
 
-	filterButton: {
-		margin: 5,
-		color: 'pink'
+	modalStyle: {
+		backgroundColor: '#e3e1dc',
+		height: deviceHeight,
+		width: deviceWidth,
+		alignItems: 'center',
+		justifyContent: 'center'
 	},
 
-	filterBtnContainer: {
-		height: (0.1 *deviceHeight) < 25 ? (0.2 * deviceHeight - 5) : 25,
-		width: (0.1 *deviceHeight) < 25 ? (0.2 * deviceHeight - 5) : 25,
-		backgroundColor: '#0373fc',
-		borderColor: '#fff',
-		borderWidth: 1,
-		borderRadius: 5,
-		margin: 'auto',
-		padding: 1
-	},
-
-	filterImage: {
-		flex: 1,
-		width: '100%',
-		height: '100%'
+	moreCardsLoader: {
+		height: 20
 	},
 
 	searchContainer: {
@@ -62,136 +203,10 @@ const styles = StyleSheet.create({
 		flexDirection: 'row'
 	},
 
-	cardNameInput: {
-		height: (0.2 *deviceHeight) < 25 ? (0.2 * deviceHeight - 5) : 25,
-		color: '#44474f',
-		backgroundColor: '#fff',
-		width: 0.3 * deviceWidth,
-		paddingLeft: 5
-	},
-
-	searchArea: {
-
-	},
-
-	cardList: {
-		width: deviceWidth,
-		height: deviceHeight
-	},
-
-	listItem: {
-		borderBottomColor: '#ccc',
-		borderBottomWidth: 1,
-		padding: 5,
-		flexDirection: 'row',
-		flex: 1,
-		alignItems: 'center',
-		justifyContent: 'space-between'
-	},
-
-	listInfo: {
-		flex: 0.85
-	},
-
-	listImage: {
-		flex: 0.15
-	},
-
-	itemTitle: {
-		fontSize: 20,
-		fontWeight: 'bold',
-		color: '#000'
-	},
-
-	itemSubtitle: {
-		fontSize: 16,
-		color: '#44474f'
-	},
-
-	itemThumbnail: {
-		width: 50,
-		height: 50
-	},
-
-	moreCardsLoader: {
-		height: 20
-	},
-
-	colorIconsContainer: {
-		flexDirection: 'row'
-	},
-
-	colorIcon: {
-		width: 15,
-		height: 15,
-		borderRadius: 25,
-		backgroundColor: 'black',
-		borderColor: '#bcd1bc',
-		borderWidth: 1
-	},
-
-	cardDetailContainer: {
-		flex: 1,
-		backgroundColor: '#000',
-		width: '100%',
-		height: '100%'
-	},
-
-	cardDetailView: {
-		flex: 1,
-		backgroundColor: '#000',
-		alignItems: 'center',
-		justifyContent: 'center',
-		position: 'relative', //TODO
-		padding: 15,
-	},
-
-	cardDetailImage: {
-		width: 200,
-		height: 300,
-		flex: 1,
-		marginTop: 50,
-	},
-
-	closeBtn: {
-		width: 25,
-		height: 25,
-		backgroundColor: '#fff',
-		borderRadius: 50,
-		position: 'absolute',
-		top: 5,
-		right: 5,
-		alignItems: 'center',
-		justifyContent: 'center',
-		zIndex: 2
-	},
-
-	fullScreenImageContainer: {
-		marginTop: 10,
-		position: 'relative',
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'stretch',
-		backgroundColor: '#000',
-		position: 'relative'
-	},
-
-	fullScreenImage: {
-		flex: 1,
-		width: deviceWidth * 0.9,
-		height: deviceHeight * 0.9
-	},
-
-	modalStyle: {
-		width: deviceWidth,
-		height: deviceHeight,
-		justifyContent: 'center',
-		alignItems: 'center',
-		position: 'absolute',
-		top: 0,
-		left: 0,
-		backgroundColor: '#e3e1dc'
+	top20: {
+		marginTop: 20
 	}
+
 });
 
 export default styles;
