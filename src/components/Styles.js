@@ -186,7 +186,11 @@ const styles = StyleSheet.create({
 		width: deviceWidth,
 		height: deviceHeight,
 		justifyContent: 'center',
-		alignItems: 'center'
+		alignItems: 'center',
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		backgroundColor: '#e3e1dc'
 	}
 });
 

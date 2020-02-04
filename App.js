@@ -77,7 +77,9 @@ export default class App extends React.Component {
 
 				<CardList cards={this.state.data} showLoader={this.state.gettingNewCards}></CardList>
 				{/* {activity} */}
-
+				{/* <Modal visible={this.state.showingDetails} style={styles.modalStyle}>
+					<Text>inside modal {this.state.showingDetails ? 'true' : 'false'}</Text>
+				</Modal> */}
 				{/* <Modal visible={false} animationType="slide" onRequestClose={()=>{}} style={styles.modalStyle}>
 					<Text>inside modal {this.state.showingDetails? 'true' : 'false'}</Text>
 					<CardDetail card={this.cardInDetail}></CardDetail>
