@@ -48,7 +48,7 @@ class CardList extends React.Component {
 			);
 		}
 
-		return <View />
+		return null;
 	}
 }
 

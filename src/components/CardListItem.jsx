@@ -10,6 +10,7 @@ class CardListItem extends React.Component {
 	constructor(props) {
 		super(props);
 
+		// Binds
 		this._itemSelected = this._itemSelected.bind(this);
 	}
 
@@ -22,7 +23,7 @@ class CardListItem extends React.Component {
 
 	render() {
 		return (
-			<TouchableHighlight onPress={this._itemSelected} underlayColor="white">
+			<TouchableHighlight onPress={this._itemSelected} underlayColor="#fff">
 				<View style={styles.listItem}>
 					<View style={styles.listInfo}>
 						<Text style={styles.itemTitle}>{this.props.card.name}</Text>

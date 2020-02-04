@@ -11,9 +11,12 @@ class CardDetail extends React.Component {
 		this.state = {
 			showFullImage: false
 		};
+
+		// + Binds
 		this._closeDetail = this._closeDetail.bind(this);
 		this._showFullImage = this._showFullImage.bind(this);
 		this._hideFullImage = this._hideFullImage.bind(this);
+		// - Binds
 	}
 
 	/*

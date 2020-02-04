@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
 	detailImageMessage: {
 		fontSize: 12,
 		color: '#ccc',
-		marginTop: 5
+		marginTop: 2
 	},
 
 	detailSubtitle: {
@@ -93,7 +93,8 @@ const styles = StyleSheet.create({
 	filterImage: {
 		flex: 1,
 		width: '100%',
-		height: '100%'
+		height: '100%',
+		margin: 'auto'
 	},
 
 	filterBtnContainer: {
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
 	fullScreenImageContainer: {
 		position: 'relative',
 		justifyContent: 'center',
-		alignItems: 'stretch',
+		alignItems: 'center',
 		backgroundColor: '#000',
 		position: 'relative',
 		width: deviceWidth,
@@ -179,12 +180,12 @@ const styles = StyleSheet.create({
 	},
 
 	menu: {
-		height: 0.1 * deviceHeight,
+		height: 45,
 		width: deviceWidth,
 		padding: 10,
 		backgroundColor: '#376db3',
 		justifyContent: 'space-between',
-		flexDirection: 'row',
+		flexDirection: 'row'
 	},
 
 	modalStyle: {
@@ -200,7 +201,7 @@ const styles = StyleSheet.create({
 	},
 
 	searchContainer: {
-		margin: 'auto',
+		justifyContent: 'center',
 		flexDirection: 'row'
 	},
 

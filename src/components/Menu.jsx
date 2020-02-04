@@ -2,11 +2,12 @@ import React from 'react';
 import {View, TouchableHighlight, Image, TextInput, Modal, Button} from 'react-native';
 import Actions from '../actions/cardsAction.js';
 import styles from './Styles.js';
+
 const colorFilterValues = ['red', 'blue', 'green', 'white', 'black'];
 
 class Menu extends React.Component{
 
-	selectedFilter = '';
+	selectedFilter = null;
 
 	constructor(props) {
 		super(props);
@@ -15,30 +16,59 @@ class Menu extends React.Component{
 			showColorFilter: false
 		}
 
-		this._showColorFilters = this._showColorFilters.bind(this);
+		// + Binds
 		this._hideColorFilters = this._hideColorFilters.bind(this);
+		this._showColorFilters = this._showColorFilters.bind(this);
 		this._removeFilters = this._removeFilters.bind(this);
-		this._selectColorFilter = this._selectColorFilter.bind(this);
 		this._searchByCardName = this._searchByCardName.bind(this);
+		this._selectColorFilter = this._selectColorFilter.bind(this);
+		// - Binds
 	}
 
+	/*
+		Turns invisible the color filters Modal
+	*/
+	_hideColorFilters() {
+		this.setState({showColorFilter: false});
+	}
+
+	/*
+		Turns visible the color filters Modal
+	*/
+	_showColorFilters() {
+		this.setState({showColorFilter: true});
+	}
+
+	/*
+		Removes a selected color filter
+		Calls the Action for Filtering cards
+	*/
 	_removeFilters() {
-		this.selectedFilter = null;
+
+		if (this.selectedFilter) {
+			this.selectedFilter = null;
+			Actions.filterCards({
+				name: this.state.cardName,
+				color: this.selectedFilter
+			});
+		}
+		this._hideColorFilters();
+	}
+
+	/*
+		Calls the Action for filtering cards by name (and color filter if any selected)
+	*/
+	_searchByCardName() {
 		Actions.filterCards({
 			name: this.state.cardName,
 			color: this.selectedFilter
 		});
-		this._hideColorFilters();
 	}
 
-	_showColorFilters() {
-		this.setState(Object.assign(this.state, {showColorFilter: true}));
-	}
-
-	_hideColorFilters() {
-		this.setState(Object.assign(this.state, {showColorFilter: false}));
-	}
-
+	/*
+		Assings recieved color string to the selected filter
+		Calls the Action for filtering cards by color (and name if any in input)
+	*/
 	_selectColorFilter(color) {
 		this.selectedFilter = color;
 		Actions.filterCards({
@@ -46,13 +76,6 @@ class Menu extends React.Component{
 			color: color
 		});
 		this._hideColorFilters();
-	}
-
-	_searchByCardName() {
-		Actions.filterCards({
-			name: this.state.cardName,
-			color: this.selectedFilter
-		});
 	}
 
 	render() {
