@@ -64,11 +64,14 @@ class CardDetail extends React.Component {
 						</Text>
 	
 						<Text style={styles.detailTitle}>{this.props.card.name}</Text>
-						{this.props.card.colors.map((color) => {
-							return(
-								<ColorIcon key={color} colorName={color} ></ColorIcon>
-							);
-						})}
+
+						<View style={styles.colorIconsContainer}>
+							{this.props.card.colors.map((color) => {
+								return(
+									<ColorIcon key={color} colorName={color} ></ColorIcon>
+								);
+							})}
+						</View>
 						<Text style={styles.detailSubtitle}>Type: {this.props.card.type}</Text>
 						<Text style={styles.detailSubtitle}>Set: {this.props.card.set}</Text>
 						<Text style={styles.detailSubtitle}>Set name: {this.props.card.setName}</Text>

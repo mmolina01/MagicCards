@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, TouchableHighlight, Image, TextInput, Modal, Button} from 'react-native';
+import {View, TouchableHighlight, Image, TextInput, Modal, Button, Text} from 'react-native';
 import Actions from '../actions/cardsAction.js';
 import styles from './Styles.js';
 
@@ -7,22 +7,33 @@ const colorFilterValues = ['red', 'blue', 'green', 'white', 'black'];
 
 class Menu extends React.Component{
 
-	selectedFilter = null;
+	//selectedFilter = null;
 
 	constructor(props) {
 		super(props);
 		this.state = {
 			cardName: '',
-			showColorFilter: false
+			showColorFilter: false,
+			selectedFilter: ''
 		}
+		this.initialFilters = '';
 
 		// + Binds
+		this._cancelColorFilters = this._cancelColorFilters.bind(this);
 		this._hideColorFilters = this._hideColorFilters.bind(this);
 		this._showColorFilters = this._showColorFilters.bind(this);
-		this._removeFilters = this._removeFilters.bind(this);
+		this._applyFilters = this._applyFilters.bind(this);
 		this._searchByCardName = this._searchByCardName.bind(this);
 		this._selectColorFilter = this._selectColorFilter.bind(this);
 		// - Binds
+	}
+
+	/*
+		Cancels the color filter screens, resetting the selected color filters to its initial state
+	*/
+	_cancelColorFilters() {
+		this.setState({selectedFilter: this.initialFilters});
+		this._hideColorFilters();
 	}
 
 	/*
@@ -36,6 +47,7 @@ class Menu extends React.Component{
 		Turns visible the color filters Modal
 	*/
 	_showColorFilters() {
+		this.initialFilters = this.state.selectedFilter;
 		this.setState({showColorFilter: true});
 	}
 
@@ -43,15 +55,12 @@ class Menu extends React.Component{
 		Removes a selected color filter
 		Calls the Action for Filtering cards
 	*/
-	_removeFilters() {
+	_applyFilters() {
 
-		if (this.selectedFilter) {
-			this.selectedFilter = null;
-			Actions.filterCards({
-				name: this.state.cardName,
-				color: this.selectedFilter
-			});
-		}
+		Actions.filterCards({
+			name: this.state.cardName,
+			color: this.state.selectedFilter
+		});
 		this._hideColorFilters();
 	}
 
@@ -61,21 +70,31 @@ class Menu extends React.Component{
 	_searchByCardName() {
 		Actions.filterCards({
 			name: this.state.cardName,
-			color: this.selectedFilter
+			color: this.state.selectedFilter
 		});
 	}
 
 	/*
-		Assings recieved color string to the selected filter
-		Calls the Action for filtering cards by color (and name if any in input)
+		Adds/removes recieved color string to the selected filters
 	*/
 	_selectColorFilter(color) {
-		this.selectedFilter = color;
-		Actions.filterCards({
-			name: this.state.cardName,
-			color: color
-		});
-		this._hideColorFilters();
+
+		let selectedFilter = '';
+
+		if (this.state.selectedFilter.includes(color)) {
+			const filters = this.state.selectedFilter.split(',').filter((c) => c !== color);
+			for (let i = 0; i < filters.length; i++) {
+				if (i > 0) {
+					selectedFilter += ',' + filters[i];
+				} else{
+					selectedFilter += filters[i];
+				}
+			}
+		} else{
+			selectedFilter = this.state.selectedFilter ? this.state.selectedFilter += ',' + color: color;
+		}
+
+		this.setState({selectedFilter});
 	}
 
 	render() {
@@ -111,7 +130,7 @@ class Menu extends React.Component{
 									<Button title={colorName} color={colorName.toLowerCase()} 
 									onPress={() => this._selectColorFilter(colorName)} />
 									{
-										colorName == this.selectedFilter ? 
+										this.state.selectedFilter.includes(colorName) ? 
 										<Image source={require('../images/check.png')} style={styles.selectedFilterIcon}/> 
 										: null
 									}
@@ -119,11 +138,14 @@ class Menu extends React.Component{
 								</View>
 							);
 						})}
+						<Text style={styles.top20}>
+							...
+						</Text>
 						<View style={[styles.filterButton, styles.top20]}>
-							<Button title={'remove filters'} color={'orange'} onPress={this._removeFilters}/>
+							<Button title={'Apply filters'} color={'orange'} onPress={this._applyFilters}/>
 						</View>
 						<View style={styles.filterButton}>
-							<Button title={'cancel'} color={'gray'} onPress={this._hideColorFilters}/>
+							<Button title={'cancel'} color={'gray'} onPress={this._cancelColorFilters}/>
 						</View>
 					</View>
 				</Modal>

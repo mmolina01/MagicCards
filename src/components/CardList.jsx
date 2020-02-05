@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, View, ActivityIndicator} from 'react-native';
+import {FlatList, View, ActivityIndicator, Text} from 'react-native';
 import CardListItem from './CardListItem.jsx';
 import Actions from '../actions/cardsAction.js';
 import styles from './Styles.js';
@@ -46,9 +46,17 @@ class CardList extends React.Component {
 					ListFooterComponent={this._renderLoader}
 				/>
 			);
+		} else if (this.props.cards && this.props.cards.length === 0) {
+			<View style={styles.cardList}>
+				<Text>No cards found</Text>
+			</View>
 		}
 
-		return null;
+		return (
+			<View style={styles.cardList}>
+				<Text>No cards found</Text>
+			</View>
+		);
 	}
 }
 

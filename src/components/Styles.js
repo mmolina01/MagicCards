@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 
 	cardList: {
 		width: deviceWidth,
-		height: deviceHeight
+		height: deviceHeight - 60
 	},
 
 	cardNameInput: {

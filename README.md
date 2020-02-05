@@ -3,4 +3,6 @@ This app displays a list of cards (paginated), details of each card are viewable
 
 This is a test project setted up with Expo.
 
-Deskto view of this app is not available since it uses React-Native Modal which are not supported buy Web browsers
+Desktop view of this app is not available since it uses React-Native Modal which is not implemented for Web browsers.
+
+Regarding the API, the contains filter doesn't work well and brings some cards without imageUrl, image place holders are placed on those cases.
