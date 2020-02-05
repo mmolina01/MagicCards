@@ -9,13 +9,12 @@ import CardDetail from './src/components/CardDetail.jsx';
 
 export default class App extends React.Component {
 
-	//
-	cardInDetail = null;
 	state = {
 		loadingCards: true,
 		gettingNewCards: false,
 		data: [],
-		showingDetails: false
+		showingDetails: false,
+		cardInDetail: null
 	};
 
 	/*
@@ -24,47 +23,73 @@ export default class App extends React.Component {
 	*/
 	componentDidMount() {
 
-		CardsStore.on('CARDS_LOADED', (data) => {
-			this.setState({data});
-		});
+		// + Binds
+		this._activateLoading = this._activateLoading.bind(this);
+		this._activateLoadingMore = this._activateLoadingMore.bind(this);
+		this._cardsLoaded = this._cardsLoaded.bind(this);
+		this._closeDetails = this._closeDetails.bind(this);
+		this._showDetails = this._showDetails.bind(this);
+		// - Binds
 
-		CardsStore.on('LOADING_STATE', (loadingCards) => {
-			this.setState({loadingCards});
-		});
-
-		CardsStore.on('LOADING_MORE_STATE', (gettingNewCards) => {
-			this.setState({gettingNewCards});
-		});
-		
-		CardsStore.on('SHOW_DETAILS', (card) => {
-			this.showDetails(card);
-		});
-
-		CardsStore.on('CLOSE_DETAILS', () => {
-			this.closeDetails();
-		});
+		// + Add event listeners
+		CardsStore.on('CARDS_LOADED', this._cardsLoaded);
+		CardsStore.on('LOADING_STATE', this._activateLoading);
+		CardsStore.on('LOADING_MORE_STATE', this._activateLoadingMore);
+		CardsStore.on('SHOW_DETAILS', this._showDetails);
+		CardsStore.on('CLOSE_DETAILS', this._closeDetails);
+		// - Add event listeners
 
 		CardsStore.init();
 	}
 
+	/*
+		Removes all listeners before unmointing the component
+	*/
 	componentWillUnmount() {
-		//remove event listeners (not needed for this app)
+
+		// + Remove event listeners
+		CardsStore.removeListener('CARDS_LOADED', this._cardsLoaded);
+		CardsStore.removeListener('LOADING_STATE', this._activateLoading);
+		CardsStore.removeListener('LOADING_MORE_STATE', this._activateLoadingMore);
+		CardsStore.removeListener('SHOW_DETAILS', this._showDetails);
+		CardsStore.removeListener('CLOSE_DETAILS', this._closeDetails);
+		// - Remove event listeners
+	}
+
+	/*
+		Turns visible the loading modal, covering all the screen to prevent user input while loading cards
+	*/
+	_activateLoading(loadingCards) {
+		this.setState({loadingCards});
+	}
+
+	/*
+		Sets to true gettingNewCards, passed as prop to the list for showing the loading indicator at its footer
+	*/
+	_activateLoadingMore(gettingNewCards) {
+		this.setState({gettingNewCards});
+	}
+
+	/*
+		Updates the data object for re-rendering the cards list
+	*/
+	_cardsLoaded(data) {
+		this.setState({data});
 	}
 
 	/*
 		Turns invisible the card detail Modal
 	*/
-	closeDetails() {
+	_closeDetails() {
 		this.setState({showingDetails: false});
 	}
 
 	/*
 		Turns visible the card detail Modal
 	*/
-	showDetails(card) {
+	_showDetails(card) {
 		if (card) {
-			this.cardInDetail = card;
-			this.setState({showingDetails: true});
+			this.setState({showingDetails: true, cardInDetail: card});
 		}
 	}
 
@@ -84,7 +109,7 @@ export default class App extends React.Component {
 					<CardList cards={this.state.data} showLoader={this.state.gettingNewCards}></CardList>
 					<Modal visible={this.state.showingDetails} animationType="slide" style={styles.modalStyle}>
 						<View style={styles.innerModalContainer}>
-							<CardDetail card={this.cardInDetail}></CardDetail>
+							<CardDetail card={this.state.cardInDetail}></CardDetail>
 						</View>
 					</Modal>
 				</View>
