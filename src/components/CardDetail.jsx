@@ -57,7 +57,7 @@ class CardDetail extends React.Component {
 						</TouchableWithoutFeedback>
 	
 						<TouchableWithoutFeedback onPress={this._showFullImage}>
-							<Image style={styles.cardDetailImage} source={{uri: this.props.card.imageUrl}} />
+							<Image style={styles.cardDetailImage} source={{uri: this.props.card.imageUrl}} defaultSource={require('../images/noCard.jpg')} />
 						</TouchableWithoutFeedback>
 						<Text style={styles.detailImageMessage}>
 							Touch image to view full screen
@@ -83,7 +83,7 @@ class CardDetail extends React.Component {
 										<Text>X</Text>
 									</View>
 								</TouchableWithoutFeedback>
-								<Image resizeMode='contain' style={styles.fullScreenImage} source={{uri: this.props.card.imageUrl}} />
+								<Image resizeMode='contain' style={styles.fullScreenImage} source={{uri: this.props.card.imageUrl}} defaultSource={require('../images/noCard.jpg')} />
 							</View>
 						</Modal>
 					</View>

@@ -39,7 +39,7 @@ class CardListItem extends React.Component {
 					</View>
 
 					<View style={styles.listImage}>
-						<Image style={styles.itemThumbnail} source={{uri:this.props.card.imageUrl}} />
+						<Image style={styles.itemThumbnail} source={{uri:this.props.card.imageUrl}} defaultSource={require('../images/noCard.jpg')}/>
 					</View>
 				</View>
 			</TouchableHighlight>
