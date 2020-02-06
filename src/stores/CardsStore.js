@@ -8,6 +8,7 @@ class CardsStore extends EventEmitter {
 	filters = {};
 	loading = false;
 	loadingMore = false;
+	noCardsFound = false;
 
 	constructor() {
 		super();
@@ -49,6 +50,7 @@ class CardsStore extends EventEmitter {
 		this.loading = true;
 		this.emitLoadingState();
 
+		this.noCardsFound = false;
 		this.cards = await this.getCards();
 		this.emitNewCards();
 
@@ -71,10 +73,9 @@ class CardsStore extends EventEmitter {
 		.then((responseJson) => {
 
 			//API isn't 100% accurate with "contains=imageUrl", this filter removes cards without images
-			//*Filtering messes up with calculating the number of cards per page, which is used to not making more request..
-				//..when there are no more cards to get (happens with filters). For not having to keep track of the total..
-				//..of cards after filtering it will stay off.
-			const cards = responseJson.cards;//.filter((card) => card.imageUrl);
+			const cards = responseJson.cards.filter((card) => card.imageUrl);
+
+			this.noCardsFound = (cards.length === 0);
 
 			return cards;
 		})
@@ -89,7 +90,7 @@ class CardsStore extends EventEmitter {
 	*/
 	async getNextPage() {
 
-		if (!this.loadingMore && this.cards.length >= (pageSize * this.page)) {
+		if (!this.loadingMore && !this.noCardsFound) {
 			this.loadingMore = true;
 			this.emitLoadingMoreState();
 	
