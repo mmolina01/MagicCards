@@ -60,7 +60,13 @@ export default class App extends React.Component {
 		Turns visible the loading modal, covering all the screen to prevent user input while loading cards
 	*/
 	_activateLoading(loadingCards) {
-		this.setState({loadingCards});
+		/* When the petitions (API) are too fast (usually when no cards found)
+			the modal doesn't have time to show/hide between them and gets stucks sometimes,
+			the delay avoids that
+		*/
+		setTimeout(() => {
+			this.setState({loadingCards});
+		}, 600);
 	}
 
 	/*

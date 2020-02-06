@@ -1,4 +1,4 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import {StyleSheet, Dimensions, Platform} from 'react-native';
 
 const window = Dimensions.get('window');
 const deviceWidth = window.width;
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 
 	cardList: {
 		width: deviceWidth,
-		height: deviceHeight - 60
+		height: deviceHeight
 	},
 
 	cardNameInput: {
@@ -198,6 +198,11 @@ const styles = StyleSheet.create({
 
 	moreCardsLoader: {
 		height: 20
+	},
+
+	noCardsFound: {
+		width: deviceWidth,
+		height: deviceHeight - ((Platform.OS === 'ios') ? 110 : 0)
 	},
 
 	searchContainer: {

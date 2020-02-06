@@ -1,7 +1,7 @@
 import {EventEmitter} from 'events';
 import dispatcher from '../Dispatcher';
 
-const pageSize = 30;
+const pageSize = 20;
 
 class CardsStore extends EventEmitter {
 	page = 1;
@@ -64,8 +64,8 @@ class CardsStore extends EventEmitter {
 	async getCards() {
 
 		let filterString = '';
-		filterString += (this.filters && this.filters.color ? '&colors='+this.filters.color : '');
 		filterString += (this.filters && this.filters.name ? '&name='+this.filters.name : '');
+		filterString += (this.filters && this.filters.color ? '&colors='+this.filters.color : '');
 
 		return fetch('https://api.magicthegathering.io/v1/cards?page=' + this.page +
 		'&pageSize=' + pageSize +'&contains=imageUrl' + filterString)

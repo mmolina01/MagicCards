@@ -53,7 +53,7 @@ class CardList extends React.Component {
 		}
 
 		return (
-			<View style={styles.cardList}>
+			<View style={styles.noCardsFound}>
 				<Text>No cards found</Text>
 			</View>
 		);
