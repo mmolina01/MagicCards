@@ -64,9 +64,10 @@ export default class App extends React.Component {
 			the modal doesn't have time to show/hide between them and gets stucks sometimes,
 			the delay avoids that
 		*/
+		const t = loadingCards ? 0 : 600;
 		setTimeout(() => {
 			this.setState({loadingCards});
-		}, 600);
+		}, t);
 	}
 
 	/*
